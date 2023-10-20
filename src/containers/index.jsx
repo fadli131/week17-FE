@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, CardContent, Typography, Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, Button, Modal, TextField } from '@mui/material';
+import { Card, API_BASE_URL, CardContent, Typography, Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, Button, Modal, TextField } from '@mui/material';
 
 const BookContainer = () => {
   const [books, setBooks] = useState([]);
@@ -9,7 +9,7 @@ const [editModalOpen, setEditModalOpen] = useState(false);
 
       const fetchBooks = async () => {
         try {
-          const response = await axios.get('http://localhost:3004/api/v1/books');
+          const response = await axios.get('${API_BASE_URL}/api/v1/books');
                     const booksData = response.data.data;
       
           if (Array.isArray(booksData)) {
@@ -43,7 +43,7 @@ useEffect(() => {
 
   const handleEditSubmit = async () => {
     try {
-      await axios.put(`http://localhost:3004/api/v1/books/${selectedBook.id}`, {
+      await axios.put(`${API_BASE_URL}/api/v1/books/${selectedBook.id}`, {
         name: selectedBook.name,
         author: selectedBook.author,
       });
@@ -58,7 +58,7 @@ useEffect(() => {
   const handleDelete = async (id) => {
     try {
 
-      await axios.delete(`http://localhost:3004/api/v1/books/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/v1/books/${id}`);
 
       setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
     } catch (error) {
